@@ -1,0 +1,52 @@
+name: DuelCore
+version: '${version}'
+main: net.duelcore.plugin.DuelCorePlugin
+api-version: '1.21'
+author: YourName
+description: Duel / Party / FFA / Ranked-tier / Discord-linked PvP plugin
+softdepend: [ PlaceholderAPI ]
+
+commands:
+  duel:
+    description: Open the duel menu / challenge a player
+    usage: /duel [player]
+  queue:
+    description: Open the kit queue menu
+    usage: /queue
+  party:
+    description: Open or manage your party
+    usage: /party
+  leaderboard:
+    description: Open the tier-test leaderboard
+    usage: /leaderboard
+  kiteditor:
+    description: Edit your personal loadout for a kit
+    usage: /kiteditor
+  duelsettings:
+    description: Open your DuelCore settings
+    usage: /duelsettings
+  verify:
+    description: Link your Discord account
+    usage: /verify
+  result:
+    description: Set a player's tier for a kit (tier-test result)
+    usage: /result <player> <gamemode> <tier>
+    permission: duelcore.admin
+  profile:
+    description: View a player's DuelCore stats
+    usage: /profile [player]
+  stats:
+    description: View a player's DuelCore stats
+    usage: /stats [player]
+  duelcoreadmin:
+    description: Admin commands for DuelCore
+    usage: /duelcoreadmin <reload|setcurrency|settier|...>
+    permission: duelcore.admin
+
+permissions:
+  duelcore.admin:
+    description: Access to DuelCore admin commands
+    default: op
+  duelcore.use:
+    description: Access to all base DuelCore features
+    default: true

@@ -1,0 +1,197 @@
+# ================================================================
+#  DuelCore Configuration
+#  Every text field supports MiniMessage formatting, including hex:
+#    <#ff5555>Text</#ff5555>   or   <color:#ff5555>Text</color>
+#  Gradients also work:  <gradient:#ff0000:#ffff00>Text</gradient>
+# ================================================================
+
+database:
+  # MySQL is required for proxy/multi-server networks so data is
+  # shared live between every backend server.
+  host: "127.0.0.1"
+  port: 3306
+  name: "duelcore"
+  username: "duelcore"
+  password: "changeme"
+  pool-size: 10
+  # Unique id for THIS backend server, used for cross-server duel/party routing.
+  server-id: "server-1"
+
+currency:
+  name: "Shards"
+  symbol: ""
+  starting-balance: 0
+  format: "<#55ff55>%amount%</#55ff55>"
+
+# ----------------------------------------------------------------
+# Hotbar — given to every player on join / respawn at lobby spawn
+# slot is 0-8 (hotbar left to right)
+# ----------------------------------------------------------------
+hotbar:
+  enabled: true
+  items:
+    queue:
+      slot: 0
+      material: DIAMOND_SWORD
+      name: "<#55fcf1>Queue"
+      lore:
+        - "<gray>Right click to join a kit queue"
+      glow: true
+    duel:
+      slot: 1
+      material: STONE_SWORD
+      name: "<#ff5555>Duel"
+      lore:
+        - "<gray>Right click to challenge a player"
+    leaderboard:
+      slot: 2
+      material: OAK_SIGN
+      name: "<#ffaa00>Leaderboard"
+      lore:
+        - "<gray>Right click to view the Tier-Test leaderboard"
+    party:
+      slot: 3
+      material: CAKE
+      name: "<#ff55ff>Party"
+      lore:
+        - "<gray>Right click to open your party menu"
+    settings:
+      slot: 6
+      material: BOOK
+      name: "<#aaaaaa>Settings"
+      lore:
+        - "<gray>Right click to open settings"
+    kiteditor:
+      slot: 7
+      material: CRAFTING_TABLE
+      name: "<#ffd700>Kit Editor"
+      lore:
+        - "<gray>Right click to edit your kit loadouts"
+
+# ----------------------------------------------------------------
+# Kits — grouped into categories exactly like the in-game menu
+# points-required drives ranked matchmaking pools later
+# ----------------------------------------------------------------
+categories:
+  favorites: "<#ffd700>Favorites"
+  weapons: "<#55fcf1>Weapons"
+  vanilla: "<#ffaa00>Vanilla"
+  skills: "<#ff55ff>Skills"
+
+kits:
+  end-game:
+    display-name: "<#ffaa00>End Game"
+    category: vanilla
+    icon: NETHERITE_SWORD
+    ranked: true
+  sword:
+    display-name: "<#55fcf1>Sword"
+    category: weapons
+    icon: DIAMOND_SWORD
+    ranked: true
+  mace:
+    display-name: "<#aaaaaa>Mace"
+    category: weapons
+    icon: MACE
+    ranked: true
+  crystal:
+    display-name: "<#ff55ff>Crystal"
+    category: skills
+    icon: END_CRYSTAL
+    ranked: true
+  spear:
+    display-name: "<#55fcf1>Spear"
+    category: weapons
+    icon: TRIDENT
+    ranked: true
+  diamond-smp:
+    display-name: "<#ff55ff>Diamond SMP"
+    category: favorites
+    icon: DIAMOND_CHESTPLATE
+    ranked: true
+  axe-shield:
+    display-name: "<#55fcf1>Axe & Shield"
+    category: weapons
+    icon: IRON_AXE
+    ranked: true
+  early-game:
+    display-name: "<#ffaa00>Early Game"
+    category: vanilla
+    icon: WOODEN_SWORD
+    ranked: true
+  late-game:
+    display-name: "<#ffaa00>Late Game"
+    category: vanilla
+    icon: NETHERITE_CHESTPLATE
+    ranked: true
+  bow:
+    display-name: "<#55fcf1>Bow"
+    category: weapons
+    icon: BOW
+    ranked: true
+  pot:
+    display-name: "<#ff5555>Pot"
+    category: skills
+    icon: SPLASH_POTION
+    ranked: true
+
+# ----------------------------------------------------------------
+# Ranked tiers — LT (Low Tier) / HT (High Tier), 5 ranks each.
+#
+# IMPORTANT: tiers are NOT auto-calculated from grinding points anymore.
+# An owner/admin sets a player's tier in a kit directly with:
+#     /result <player> <gamemode> <tier>
+# (a "tier test" match, judged by staff, ends in a manually-assigned tier).
+#
+# Each tier still unlocks an armor-trim material/pattern the moment it's
+# assigned, and each tier carries a fixed "points-value" — the sum of every
+# kit's tier points-value is the player's %duelcore_overall% used to rank
+# them on the Top 10 Overall leaderboard.
+# ----------------------------------------------------------------
+tiers:
+  order: [ "LT5", "LT4", "LT3", "LT2", "LT1", "HT5", "HT4", "HT3", "HT2", "HT1" ]
+  definitions:
+    LT5: { display: "<#aaaaaa>LT5", trim-material: "GOLD",      points-value: 1 }
+    LT4: { display: "<#aaaaaa>LT4", trim-material: "LAPIS",     points-value: 3 }
+    LT3: { display: "<#aaaaaa>LT3", trim-material: "COPPER",    points-value: 6 }
+    LT2: { display: "<#aaaaaa>LT2", trim-material: "IRON",      points-value: 20 }
+    LT1: { display: "<#ffd700>LT1", trim-material: "DIAMOND",   points-value: 45 }
+    HT5: { display: "<#ff9955>HT5", trim-material: "EMERALD",   points-value: 2 }
+    HT4: { display: "<#ff7755>HT4", trim-material: "REDSTONE",  points-value: 4 }
+    HT3: { display: "<#ff5555>HT3", trim-material: "NETHERITE", points-value: 10 }
+    HT2: { display: "<#ff3355>HT2", trim-patterns: [ "VEX","WARD","EYE","TIDE","SPIRE","FLOW","BOLT" ], points-value: 30 }
+    HT1: { display: "<#ff0055>HT1", trim-material: "AMETHYST",  points-value: 60 }
+
+# ----------------------------------------------------------------
+# GUI titles/text — all MiniMessage
+# ----------------------------------------------------------------
+gui:
+  queue:
+    title: "<#55fcf1><b>Kit Queue"
+    join-hint: "<#55fcf1>Click a kit to join or leave its queue."
+  duel:
+    title: "<#ff5555><b>Duel a Player"
+    hint: "<gray>Enter a player's name to duel them, or choose an online suggestion."
+  kit-editor:
+    title: "<white>Select Kit To Edit"
+  party:
+    title: "<#ff55ff><b>Party Menu"
+    not-in-party: "<gray>You are not currently in a party."
+  settings:
+    title: "<#aaaaaa><b>Settings"
+  leaderboard:
+    title: "<#ffaa00><b>Tier-Test Leaderboard"
+    view-hint: "<#ffaa00>Right Click to View The Leaderboard"
+
+# ----------------------------------------------------------------
+# Discord integration
+# ----------------------------------------------------------------
+discord:
+  enabled: false
+  bot-token: "PUT_YOUR_BOT_TOKEN_HERE"
+  guild-id: "0"
+  tier-announce-channel-id: "0"
+  verified-role-id: "0"
+  verify-code-expiry-minutes: 10
+  tier-up-message: "🎉 **%player%** just tier tested and reached **%tier%** in **%kit%**! Congrats <@%discord_id%>!"
+  tier-up-message-no-link: "🎉 **%player%** just tier tested and reached **%tier%** in **%kit%**!"
